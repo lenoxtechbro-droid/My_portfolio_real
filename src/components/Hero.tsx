@@ -5,7 +5,7 @@ import profileImage from "@/assets/profile.png";
 import { useState, useEffect, useRef } from "react";
 
 
-const CV = "http://localhost:8080/LENOX_IRUNGU_CV.docx";
+const CV = "/LENOX_IRUNGU_CV.docx";
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
