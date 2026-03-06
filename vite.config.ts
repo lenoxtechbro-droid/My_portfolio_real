@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/my-tech-showcase-main-real/',
+  base: '/',
   server: {
     host: "::",
     port: 8080,

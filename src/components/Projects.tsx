@@ -1,55 +1,81 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import ProjectCard from "./ProjectCard";
+import { useRef } from "react";
 
 const Projects = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
   const projects = [
     {
       title: "Portfolio Website Generator",
       description:
-        "Modern portfolio builder with customizable templates, drag-and-drop interface, and responsive design for developers and creatives.",
-      image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
-      tools: ["React", "TailwindCSS", "Framer Motion"],
+        "A modern, full-featured portfolio builder with customizable templates, drag-and-drop interface, and fully responsive design for developers and creatives. Built live and showcased on TikTok.",
+      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+      tools: ["React", "Django", "SQL"],
       link: "https://vm.tiktok.com/ZMHo8VgDyNwpA-U93p8/",
+      featured: true,
     },
     {
       title: "E-Commerce Dashboard",
       description:
-        "Full-stack e-commerce analytics dashboard with real-time data visualization, inventory management, and sales tracking features.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-      tools: ["React", "Django", "MySQL"],
+        "Full-stack analytics dashboard with real-time data visualization, inventory management, and advanced sales tracking across multiple storefronts.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+      tools: ["React", "Django", "Supabase"],
       link: "#",
+      featured: false,
     },
     {
       title: "Task Automation Suite",
       description:
-        "Python-based automation toolkit for streamlining repetitive tasks, including web scraping, data processing, and report generation.",
-      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80",
-      tools: ["Python", "Pandas","n8n"],
+        "Python-based automation toolkit for eliminating repetitive workflows: web scraping, data processing, report generation, and n8n orchestration pipelines.",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+      tools: ["Python", "n8n","zappier"],
       link: "#",
+      featured: false,
     },
   ];
 
   return (
-    <section id="projects" className="py-20 px-4">
+    <section id="projects" className="py-24 px-4" style={{ position: "relative", zIndex: 2 }}>
       <div className="container mx-auto">
+        {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          ref={ref}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Featured Projects
+          <span
+            className="inline-block mb-4 text-xs font-inter font-bold uppercase tracking-widest px-4 py-1.5 rounded-full"
+            style={{
+              background: "rgba(139,92,246,0.08)",
+              border: "1px solid rgba(139,92,246,0.2)",
+              color: "#c4b5fd",
+            }}
+          >
+            Portfolio
+          </span>
+          <h2 className="text-4xl md:text-6xl font-syne font-black mb-4">
+            <span className="gradient-text-animated">Featured Projects</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A showcase of my recent work in web development, AI, and automation
+          <p
+            className="text-base font-inter max-w-xl mx-auto"
+            style={{ color: "rgba(148,163,184,0.65)" }}
+          >
+            A curated showcase of my work in web development, AI, and automation
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Bento grid: first project spans 2 cols on desktop */}
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {projects.map((project, index) => (
-            <ProjectCard key={project.title} {...project} delay={index} />
+            <ProjectCard
+              key={project.title}
+              {...project}
+              delay={index}
+            />
           ))}
         </div>
       </div>
