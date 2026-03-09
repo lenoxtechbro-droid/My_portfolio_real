@@ -1,7 +1,7 @@
 import { motion, type Variants } from "framer-motion";
 import { Download, Mail, ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import profileImage from "@/assets/profile.png";
+import profileImage from "@/assets/Profile.jpeg";
 import { useState, useEffect } from "react";
 import MagneticButton from "@/components/MagneticButton";
 
