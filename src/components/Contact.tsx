@@ -59,10 +59,10 @@ const Contact = () => {
     if (form.current) {
       emailjs
         .sendForm(
-          "service_mgn70cr",
-          "template_q3sk0q8",
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
           form.current,
-          { publicKey: "8NAUoK4HHgL6jdLlR" }
+          { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
         )
         .then(
           () => {
