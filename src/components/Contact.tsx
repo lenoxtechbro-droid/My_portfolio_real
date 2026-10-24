@@ -56,13 +56,27 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      toast({
+        title: "Configuration Error! ❌",
+        description: "EmailJS environment variables are undefined. If running locally, restart your dev server (Ctrl+C and npm run dev). If on Vercel, add them in Project Settings > Environment Variables.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     if (form.current) {
       emailjs
         .sendForm(
-          import.meta.env.VITE_EMAILJS_SERVICE_ID,
-          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+          serviceId,
+          templateId,
           form.current,
-          { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
+          { publicKey }
         )
         .then(
           () => {
@@ -73,9 +87,11 @@ const Contact = () => {
             setFormData({ name: "", email: "", phone: "", message: "" });
           },
           (error) => {
+            console.error("EmailJS error:", error);
+            const msg = error?.text || error?.message || "Failed to send email. Please check your credentials.";
             toast({
               title: "Message Failed! ❌",
-              description: `Something went wrong: ${error.text}`,
+              description: `Something went wrong: ${msg}`,
               variant: "destructive",
             });
           }
