@@ -1,12 +1,24 @@
 import { motion, useInView } from "framer-motion";
-import ProjectCard from "./ProjectCard";
+import ProjectCard, { GalleryImage } from "./ProjectCard";
+import { ArtPreset } from "./ui/glass-folder-cards";
 import { useRef } from "react";
+
+interface ProjectData {
+  title: string;
+  description: string;
+  image: string;
+  tools: string[];
+  featured: boolean;
+  gallery: GalleryImage[];
+  artPreset: ArtPreset;
+  seed: number;
+}
 
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
 
-  const projects = [
+  const projects: ProjectData[] = [
     {
       title: "Community Page",
       description:
@@ -14,6 +26,8 @@ const Projects = () => {
       image: "/projects/community-page/login page.png",
       tools: ["React", "FastAPI", "Supabase"],
       featured: true,
+      artPreset: "aurora",
+      seed: 4,
       gallery: [
         { src: "/projects/community-page/login page.png", label: "Login Page" },
         { src: "/projects/community-page/Admin Home dashbord.png", label: "Admin Home Dashboard" },
@@ -26,6 +40,8 @@ const Projects = () => {
       image: "/projects/school-dashboard/HomeAdmin dashbord.png",
       tools: ["React", "FastAPI", "MySQL"],
       featured: false,
+      artPreset: "ember",
+      seed: 12,
       gallery: [
         { src: "/projects/school-dashboard/HomeAdmin dashbord.png", label: "Home Admin Dashboard" },
         { src: "/projects/school-dashboard/Admin authentication.png", label: "Admin Authentication" },
@@ -43,6 +59,8 @@ const Projects = () => {
       image: "/projects/ai-project/LNX listening.png",
       tools: ["React", "FastAPI", "Supabase"],
       featured: false,
+      artPreset: "verdant",
+      seed: 27,
       gallery: [
         { src: "/projects/ai-project/LNX listening.png", label: "LNX Listening" },
         { src: "/projects/ai-project/LNX processing.png", label: "LNX Processing" },
@@ -81,12 +99,12 @@ const Projects = () => {
             className="text-base font-inter max-w-xl mx-auto"
             style={{ color: "rgba(148,163,184,0.65)" }}
           >
-            A curated showcase of my work in web development, AI, and automation
+            A curated showcase of interactive project folders with real screenshots and architecture previews
           </p>
         </motion.div>
 
-        {/* Bento grid: first project spans 2 cols on desktop */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        {/* 3-column responsive grid showcasing the Glass Folder Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto items-stretch">
           {projects.map((project, index) => (
             <ProjectCard
               key={project.title}

@@ -17,6 +17,7 @@ interface ProjectGalleryProps {
   onOpenChange: (open: boolean) => void;
   title: string;
   images: GalleryImage[];
+  initialIndex?: number;
 }
 
 const ProjectGallery = ({
@@ -24,17 +25,18 @@ const ProjectGallery = ({
   onOpenChange,
   title,
   images,
+  initialIndex = 0,
 }: ProjectGalleryProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [zoomed, setZoomed] = useState(false);
 
   // Reset when dialog opens
   useEffect(() => {
     if (open) {
-      setCurrentIndex(0);
+      setCurrentIndex(initialIndex);
       setZoomed(false);
     }
-  }, [open]);
+  }, [open, initialIndex]);
 
   const goNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
