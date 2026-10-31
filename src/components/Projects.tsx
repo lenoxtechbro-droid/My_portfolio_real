@@ -25,7 +25,7 @@ const Projects = () => {
         "A community platform with user authentication, admin dashboards, and interactive features. Built with a modern UI to connect and manage community members effectively.",
       image: "/projects/community-page/login page.png",
       tools: ["React", "FastAPI", "Supabase"],
-      featured: true,
+      featured: false,
       artPreset: "aurora",
       seed: 4,
       gallery: [
