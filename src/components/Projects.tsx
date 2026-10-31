@@ -8,31 +8,48 @@ const Projects = () => {
 
   const projects = [
     {
-      title: "Portfolio Website Generator",
+      title: "Community Page",
       description:
-        "A modern, full-featured portfolio builder with customizable templates, drag-and-drop interface, and fully responsive design for developers and creatives. Built live and showcased on TikTok.",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
-      tools: ["React", "Django", "SQL"],
-      link: "https://vm.tiktok.com/ZMHo8VgDyNwpA-U93p8/",
+        "A community platform with user authentication, admin dashboards, and interactive features. Built with a modern UI to connect and manage community members effectively.",
+      image: "/projects/community-page/login page.png",
+      tools: ["React", "FastAPI", "Supabase"],
       featured: true,
+      gallery: [
+        { src: "/projects/community-page/login page.png", label: "Login Page" },
+        { src: "/projects/community-page/Admin Home dashbord.png", label: "Admin Home Dashboard" },
+      ],
     },
     {
-      title: "E-Commerce Dashboard",
+      title: "School Dashboard",
       description:
-        "Full-stack analytics dashboard with real-time data visualization, inventory management, and advanced sales tracking across multiple storefronts.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-      tools: ["React", "Django", "Supabase"],
-      link: "#",
+        "Comprehensive school management system with role-based dashboards for administrators, teachers, and students. Features include fee tracking, authentication, and password management.",
+      image: "/projects/school-dashboard/HomeAdmin dashbord.png",
+      tools: ["React", "FastAPI", "MySQL"],
       featured: false,
+      gallery: [
+        { src: "/projects/school-dashboard/HomeAdmin dashbord.png", label: "Home Admin Dashboard" },
+        { src: "/projects/school-dashboard/Admin authentication.png", label: "Admin Authentication" },
+        { src: "/projects/school-dashboard/Admin dashboard.png", label: "Admin Dashboard" },
+        { src: "/projects/school-dashboard/teacher dasboard.png", label: "Teacher Dashboard" },
+        { src: "/projects/school-dashboard/student dashboard.png", label: "Student Dashboard" },
+        { src: "/projects/school-dashboard/student fees.png", label: "Student Fees" },
+        { src: "/projects/school-dashboard/change password.png", label: "Change Password" },
+      ],
     },
     {
-      title: "Task Automation Suite",
+      title: "AI Project — LNX Assistant",
       description:
-        "Python-based automation toolkit for eliminating repetitive workflows: web scraping, data processing, report generation, and n8n orchestration pipelines.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-      tools: ["Python", "n8n","zappier"],
-      link: "#",
+        "An intelligent AI assistant with voice interaction capabilities and machine learning data analysis. Features EDA visualizations, real-time listening, processing, and response generation.",
+      image: "/projects/ai-project/LNX listening.png",
+      tools: ["React", "FastAPI", "Supabase"],
       featured: false,
+      gallery: [
+        { src: "/projects/ai-project/LNX listening.png", label: "LNX Listening" },
+        { src: "/projects/ai-project/LNX processing.png", label: "LNX Processing" },
+        { src: "/projects/ai-project/LNX response.png", label: "LNX Response" },
+        { src: "/projects/ai-project/EDA charts.png", label: "EDA Charts" },
+        { src: "/projects/ai-project/EDA for ML data.png", label: "EDA for ML Data" },
+      ],
     },
   ];
 

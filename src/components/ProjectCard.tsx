@@ -1,9 +1,15 @@
 import { motion, useInView } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Images } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
-import { useRef } from "react";
+import ProjectGallery from "@/components/ProjectGallery";
+import { useRef, useState } from "react";
 
-interface ProjectCardProps {
+export interface GalleryImage {
+  src: string;
+  label: string;
+}
+
+export interface ProjectCardProps {
   title: string;
   description: string;
   image: string;
@@ -12,6 +18,8 @@ interface ProjectCardProps {
   github?: string;
   delay?: number;
   featured?: boolean;
+  /** When provided, the card opens a gallery instead of navigating to a link */
+  gallery?: GalleryImage[];
 }
 
 const toolColors: Record<string, string> = {
@@ -25,6 +33,15 @@ const toolColors: Record<string, string> = {
   n8n: "#f472b6",
   TypeScript: "#60a5fa",
   "Node.js": "#4ade80",
+  SQL: "#60a5fa",
+  Supabase: "#3ecf8e",
+  FastAPI: "#059669",
+  zappier: "#ff4a00",
+  HTML: "#e34c26",
+  CSS: "#264de4",
+  JavaScript: "#f7df1e",
+  PHP: "#777bb4",
+  Flask: "#000000",
 };
 
 const ProjectCard = ({
@@ -35,108 +52,160 @@ const ProjectCard = ({
   link = "#",
   delay = 0,
   featured = false,
+  gallery,
 }: ProjectCardProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const [galleryOpen, setGalleryOpen] = useState(false);
+
+  const hasGallery = gallery && gallery.length > 0;
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: delay * 0.12, ease: [0.23, 1, 0.32, 1] }}
-      whileHover={{ y: -6 }}
-      className={`glass-card rounded-2xl overflow-hidden group relative ${featured ? "md:col-span-2" : ""}`}
-      style={{ transition: "transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s ease" }}
-    >
-      {/* Image section */}
-      <div className={`relative overflow-hidden ${featured ? "h-64" : "h-48"}`}>
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-        />
-        {/* Gradient overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(to top, rgba(10,14,26,0.95) 0%, rgba(10,14,26,0.3) 60%, transparent 100%)",
-          }}
-        />
-        {/* Featured badge */}
-        {featured && (
+    <>
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 40 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7, delay: delay * 0.12, ease: [0.23, 1, 0.32, 1] }}
+        whileHover={{ y: -6 }}
+        className={`glass-card rounded-2xl overflow-hidden group relative ${featured ? "md:col-span-2" : ""}`}
+        style={{ transition: "transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s ease" }}
+      >
+        {/* Image section */}
+        <div className={`relative overflow-hidden ${featured ? "h-64" : "h-48"}`}>
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+          />
+          {/* Gradient overlay */}
           <div
-            className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-inter font-bold uppercase tracking-wider"
+            className="absolute inset-0"
             style={{
-              background: "rgba(96,165,250,0.15)",
-              border: "1px solid rgba(96,165,250,0.35)",
-              color: "#93c5fd",
-              backdropFilter: "blur(8px)",
+              background: "linear-gradient(to top, rgba(10,14,26,0.95) 0%, rgba(10,14,26,0.3) 60%, transparent 100%)",
             }}
-          >
-            ⭐ Featured
-          </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="p-6 space-y-4">
-        <h3
-          className="text-xl font-syne font-bold group-hover:text-blue-300 transition-colors duration-300"
-          style={{ color: "rgba(226,232,240,0.95)" }}
-        >
-          {title}
-        </h3>
-        <p
-          className="text-sm font-inter leading-relaxed line-clamp-3"
-          style={{ color: "rgba(148,163,184,0.7)" }}
-        >
-          {description}
-        </p>
-
-        {/* Tool badges */}
-        <div className="flex flex-wrap gap-2">
-          {tools.map((tool) => (
-            <span
-              key={tool}
-              className="px-2.5 py-1 text-[10px] font-inter font-bold uppercase tracking-wide rounded-full"
+          />
+          {/* Featured badge */}
+          {featured && (
+            <div
+              className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-inter font-bold uppercase tracking-wider"
               style={{
-                background: `${toolColors[tool] ?? "#94a3b8"}15`,
-                border: `1px solid ${toolColors[tool] ?? "#94a3b8"}30`,
-                color: toolColors[tool] ?? "#94a3b8",
+                background: "rgba(96,165,250,0.15)",
+                border: "1px solid rgba(96,165,250,0.35)",
+                color: "#93c5fd",
+                backdropFilter: "blur(8px)",
               }}
             >
-              {tool}
-            </span>
-          ))}
+              ⭐ Featured
+            </div>
+          )}
+          {/* Gallery badge — shows image count */}
+          {hasGallery && (
+            <div
+              className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-inter font-bold uppercase tracking-wider flex items-center gap-1.5"
+              style={{
+                background: "rgba(139,92,246,0.15)",
+                border: "1px solid rgba(139,92,246,0.35)",
+                color: "#c4b5fd",
+                backdropFilter: "blur(8px)",
+              }}
+            >
+              <Images className="h-3 w-3" />
+              {gallery.length} Screenshots
+            </div>
+          )}
         </div>
 
-        {/* Actions */}
-        <div className="flex gap-3 pt-1">
-          <MagneticButton className="flex-1">
-            <a href={link} target="_blank" rel="noopener noreferrer" className="w-full">
-              <button
-                className="w-full h-10 px-4 rounded-xl text-sm font-inter font-semibold flex items-center justify-center gap-2 transition-all duration-300"
+        {/* Content */}
+        <div className="p-6 space-y-4">
+          <h3
+            className="text-xl font-syne font-bold group-hover:text-blue-300 transition-colors duration-300"
+            style={{ color: "rgba(226,232,240,0.95)" }}
+          >
+            {title}
+          </h3>
+          <p
+            className="text-sm font-inter leading-relaxed line-clamp-3"
+            style={{ color: "rgba(148,163,184,0.7)" }}
+          >
+            {description}
+          </p>
+
+          {/* Tool badges */}
+          <div className="flex flex-wrap gap-2">
+            {tools.map((tool) => (
+              <span
+                key={tool}
+                className="px-2.5 py-1 text-[10px] font-inter font-bold uppercase tracking-wide rounded-full"
                 style={{
-                  background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
-                  color: "white",
-                  boxShadow: "0 0 20px rgba(96,165,250,0.3)",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 32px rgba(96,165,250,0.6)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(96,165,250,0.3)";
+                  background: `${toolColors[tool] ?? "#94a3b8"}15`,
+                  border: `1px solid ${toolColors[tool] ?? "#94a3b8"}30`,
+                  color: toolColors[tool] ?? "#94a3b8",
                 }}
               >
-                <ExternalLink className="h-3.5 w-3.5" />
-                View Project
-              </button>
-            </a>
-          </MagneticButton>
+                {tool}
+              </span>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-3 pt-1">
+            <MagneticButton className="flex-1">
+              {hasGallery ? (
+                <button
+                  onClick={() => setGalleryOpen(true)}
+                  className="w-full h-10 px-4 rounded-xl text-sm font-inter font-semibold flex items-center justify-center gap-2 transition-all duration-300"
+                  style={{
+                    background: "linear-gradient(135deg, #8b5cf6, #6366f1)",
+                    color: "white",
+                    boxShadow: "0 0 20px rgba(139,92,246,0.3)",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 32px rgba(139,92,246,0.6)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(139,92,246,0.3)";
+                  }}
+                >
+                  <Images className="h-3.5 w-3.5" />
+                  View Screenshots
+                </button>
+              ) : (
+                <a href={link} target="_blank" rel="noopener noreferrer" className="w-full">
+                  <button
+                    className="w-full h-10 px-4 rounded-xl text-sm font-inter font-semibold flex items-center justify-center gap-2 transition-all duration-300"
+                    style={{
+                      background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+                      color: "white",
+                      boxShadow: "0 0 20px rgba(96,165,250,0.3)",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 32px rgba(96,165,250,0.6)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(96,165,250,0.3)";
+                    }}
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    View Project
+                  </button>
+                </a>
+              )}
+            </MagneticButton>
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+
+      {/* Gallery modal */}
+      {hasGallery && (
+        <ProjectGallery
+          open={galleryOpen}
+          onOpenChange={setGalleryOpen}
+          title={title}
+          images={gallery}
+        />
+      )}
+    </>
   );
 };
 
