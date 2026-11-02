@@ -233,3 +233,46 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(96, 165, 250, 0.6);
 }
+
+/* ==========================================================================
+   Featured Projects Folder Mobile Responsiveness
+   ========================================================================== */
+.featured-folder-container {
+  width: 90vw;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  transform-origin: center center;
+  transition: transform 0.3s ease;
+}
+
+/* Small screens under 400px width */
+@media (max-width: 400px) {
+  .featured-folder-container {
+    transform: scale(0.85);
+  }
+}
+
+/* 375px breakpoint: scale down to 0.85 */
+@media (max-width: 375px) {
+  .featured-folder-container {
+    transform: scale(0.85);
+  }
+}
+
+/* 320px breakpoint: scale down to 0.75 */
+@media (max-width: 320px) {
+  .featured-folder-container {
+    transform: scale(0.75);
+  }
+}
+
+/* Preserve desktop layout: reset transform and fill card column width */
+@media (min-width: 768px) {
+  .featured-folder-container {
+    width: 100%;
+    max-width: 400px;
+    transform: none;
+  }
+}
+

@@ -72,8 +72,12 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-24 px-4" style={{ position: "relative", zIndex: 2 }}>
-      <div className="container mx-auto">
+    <section
+      id="projects"
+      className="py-24 px-4 overflow-x-hidden"
+      style={{ position: "relative", zIndex: 2, overflowX: "hidden" }}
+    >
+      <div className="container mx-auto px-0 sm:px-4">
         {/* Section header */}
         <motion.div
           ref={ref}

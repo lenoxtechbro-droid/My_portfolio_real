@@ -89,7 +89,7 @@ const ProjectCard = ({
           delay: delay * 0.15,
           ease: [0.23, 1, 0.32, 1],
         }}
-        className={`glass-card rounded-3xl p-6 flex flex-col justify-between relative group transition-all duration-500 hover:border-purple-500/40 ${
+        className={`glass-card rounded-3xl p-4 sm:p-6 flex flex-col justify-between relative group transition-all duration-500 hover:border-purple-500/40 ${
           featured ? "lg:col-span-1" : ""
         }`}
         style={{
@@ -116,7 +116,7 @@ const ProjectCard = ({
         )}
 
         {/* 3D Glass Folder Container */}
-        <div className="w-full flex flex-col items-center justify-center pt-2 pb-4 overflow-visible">
+        <div className="featured-folder-container w-[90vw] max-w-[400px] mx-auto md:w-full flex flex-col items-center justify-center pt-2 pb-4 overflow-visible origin-center transition-transform duration-300 max-[400px]:scale-[0.85] max-[375px]:scale-[0.85] max-[320px]:scale-[0.75] md:scale-100">
           <GlassFolder
             label={title}
             meta={`${gallery.length} screenshots`}
